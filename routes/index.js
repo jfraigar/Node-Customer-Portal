@@ -9,7 +9,7 @@ var org = require('../lib/connection');
 /* home page. */
 router.get('/', function(req, res, next) {
 
-  org.query({ query: "Select Id, Name, Type, Industry, Rating From Account Order By LastModifiedDate DESC" })
+  org.query({ query: "Select Id, Name, Type, Industry From Account Order By LastModifiedDate DESC" })
     .then(function(results){
       res.render('index', { records: results.records });
     });
