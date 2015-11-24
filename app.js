@@ -7,6 +7,10 @@ var expressSession = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+console.log('app.js--> var raygun = require(raygun);');
+var raygun = require('raygun');
+var raygunClient = new raygun.Client().init({ apiKey: '{{8iA/gZwcXIIvak6Q1/4e4w==}}' });
+
 console.log('app.js--> ./lib/hbsHelpers');
 // register the hanglebars helpers
 require('./lib/hbsHelpers');
@@ -91,6 +95,8 @@ app.use(function(err, req, res, next) {
   });
 });
 
+app.use(raygunClient.expressHandler);
+raygunClient.send('raygun gun gun');
 
 module.exports = app;
 
