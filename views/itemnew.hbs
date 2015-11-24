@@ -1,0 +1,118 @@
+<!-- MASTHEAD -->
+<nav class="slds-p-bottom--medium" role="navigation">
+  <p id="bread-crumb-label" class="slds-assistive-text">You are here:</p>
+  <ol class="slds-breadcrumb slds-list--horizontal" aria-labelledby="bread-crumb-label">
+    <a href="/project/" class="slds-button slds-button--brand">Projects</a>
+    <a href="/topic/" class="slds-button slds-button--brand">Topics</a>
+    <a href="/epic/" class="slds-button slds-button--brand">Epics</a>
+    <a href="/item/" class="slds-button slds-button--brand">Itens</a>
+    <a href="/sprint/" class="slds-button slds-button--brand">Sprints</a>
+    <a href="/logout/" class="slds-button slds-button--neutral">Logout</a>
+  </ol>
+</nav>
+<p class="slds-text-heading--label slds-m-bottom--small">Itens</p>
+<!-- / MASTHEAD -->
+
+<!-- PAGE HEADER -->
+<div class="slds-page-header" role="banner">
+
+  <!-- PAGE HEADER TOP ROW -->
+  <div class="slds-grid">
+
+    <!-- PAGE HEADER / ROW 1 / COLUMN 1 -->
+    <div class="slds-col">
+
+      <!-- HEADING AREA -->
+      <!-- MEDIA OBJECT = FIGURE + BODY -->
+      <div class="slds-media">
+
+        <div class="slds-media__figure">
+          <svg aria-hidden="true" class="slds-icon slds-icon--large slds-icon-standard-user">
+            <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#case"></use>
+          </svg>
+        </div>
+
+        <div class="slds-media__body">
+          <p class="slds-text-heading--label">Chamado</p>
+          <h1 class="slds-text-heading--medium">Novo Chamado</h1>
+        </div>
+
+      </div>
+      <!-- / MEDIA OBJECT -->
+      <!-- HEADING AREA -->
+
+    </div>
+    <!-- / PAGE HEADER / ROW 1 / COLUMN 1 -->
+
+  </div>
+  <!-- / PAGE HEADER TOP ROW -->
+
+</div>
+<!-- / PAGE HEADER -->
+
+<!-- PRIMARY CONTENT WRAPPER -->
+<div class="myapp">
+
+  <!-- CREATE NEW ACCOUNT -->
+    <div aria-labelledby="newcaseform">
+
+      <!-- BOXED AREA -->
+      <fieldset class="slds-box slds-theme--default">
+
+        <legend id="editaccountform" class="slds-text-heading--medium slds-p-vertical--medium">Editar Chamado</legend>
+
+        <!-- CREATE NEW ACCOUNT FORM -->
+        <form action="/item/new" method="post" class="slds-form--stacked">
+
+          <div class="slds-grid">
+            <div class="slds-col--padded slds-size--1-of-2">
+
+              <div class="slds-form-element slds-is-required">
+                <label class="slds-form-element__label" for="subject">Assunto</label>
+                <div class="slds-form-element__control">
+                  <input name="subject" id="subject" class="slds-input" type="text" required/>
+                  <span id="assuntoHelp" class="slds-form-element__help">Breve descrição.</span>
+                </div>
+              </div>
+
+              <div class="slds-form-element">
+                <div class="slds-form-element">
+                  <label class="slds-form-element__label" for="priority">Prioridade</label>
+                  <div class="slds-form-element__control">
+                    <select name="priority" id="priority" class="slds-select">
+                      <option>High</option>
+                      <option>Medium</option>
+                      <option>Low</option>                      
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="slds-grid slds-p-top--small">
+            <div class="slds-col--padded">
+
+              <div class="slds-form-element">
+                <label class="slds-form-element__label" for="description">Descrição</label>
+                <div class="slds-form-element__control">
+                  <textarea name="description" id="description" class="slds-textarea"></textarea>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+          <button class="slds-button slds-button--brand slds-m-top--medium" type="submit">Salvar</button>
+        </form>
+        <!-- CREATE NEW ACCOUNT FORM -->
+
+      </fieldset>
+      <!-- / BOXED AREA -->
+
+    </div>
+    <!-- / CREATE NEW ACCOUNT -->
+
+</div>
+<!-- / PRIMARY CONTENT WRAPPER -->

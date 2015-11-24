@@ -1,0 +1,86 @@
+<!-- MASTHEAD -->
+<p class="slds-text-heading--label slds-m-bottom--small"></p>
+<!-- / MASTHEAD -->
+
+<!-- PAGE HEADER -->
+<div class="slds-page-header" role="banner">
+
+  <!-- LAYOUT GRID -->
+  <div class="slds-grid">
+
+    <!-- GRID COL -->
+    <div class="slds-col">
+
+      <!-- HEADING AREA -->
+      <!-- MEDIA OBJECT = FIGURE + BODY -->
+
+      <!-- / MEDIA OBJECT -->
+      <!-- /HEADING AREA -->
+
+    </div>
+
+    <!-- GRID COL -->
+
+    <!-- / GRID COL -->
+
+  </div>
+  <!-- / LAYOUT GRID -->
+
+  <p class="slds-text-body--small slds-m-top--x-small">Welcome to Enigen Support</p>
+
+</div>
+<!-- / PAGE HEADER -->
+
+<!-- PRIMARY CONTENT WRAPPER -->
+<div class="myapp">
+
+  <!-- CREATE NEW ACCOUNT -->
+    <div aria-labelledby="newaccountform">
+
+      <!-- BOXED AREA -->
+      <fieldset class="slds-box slds-theme--default">
+
+        <legend id="editaccountform" class="slds-text-heading--medium slds-p-vertical--medium"></legend>
+
+        <!-- CREATE NEW ACCOUNT FORM -->
+        <form action="/login/" method="post" class="slds-form--stacked">
+
+          <div class="slds-grid">
+            <div class="slds-col--padded slds-size--1-of-1">
+
+              <div class="slds-form-element slds-is-required">
+                <label class="slds-form-element__label" for="username">Username</label>
+                <div class="slds-form-element__control">
+                  <input name="username" id="username" class="slds-input" type="text" required/>
+                  <span id="Helpusername" class="slds-form-element__help">You must enter a username.</span>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="slds-col--padded slds-size--1-of-1">
+
+              <div class="slds-form-element slds-is-required">
+                <label class="slds-form-element__label" for="password">Password</label>
+                <div class="slds-form-element__control">
+                  <input name="password" id="password" class="slds-input" type="text" required/>
+                  <span id="helppassword" class="slds-form-element__help">You must enter a password.</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <button class="slds-button slds-button--brand slds-m-top--medium" type="submit">login</button>
+        </form>
+        <!-- CREATE NEW ACCOUNT FORM -->
+
+      </fieldset>
+      <!-- / BOXED AREA -->
+      {{msg}}
+
+    </div>
+    <!-- / CREATE NEW ACCOUNT -->
+
+</div>
+<!-- / PRIMARY CONTENT WRAPPER -->

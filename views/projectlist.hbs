@@ -1,0 +1,45 @@
+<!-- MASTHEAD -->
+<nav class="slds-p-bottom--medium" role="navigation">
+  <p id="bread-crumb-label" class="slds-assistive-text">You are here:</p>
+  <ol class="slds-breadcrumb slds-list--horizontal" aria-labelledby="bread-crumb-label">
+    <a href="/project/" class="slds-button slds-button--brand">Projects</a>
+    <a href="/topic/" class="slds-button slds-button--brand">Topics</a>
+    <a href="/epic/" class="slds-button slds-button--brand">Epics</a>
+    <a href="/item/" class="slds-button slds-button--brand">Itens</a>
+    <a href="/sprint/" class="slds-button slds-button--brand">Sprints</a>
+    <a href="/logout/" class="slds-button slds-button--neutral">Logout</a>
+  </ol>
+</nav>
+<p class="slds-text-heading--label slds-m-bottom--small">Projetos</p>
+<!-- / MASTHEAD -->
+
+<!-- PAGE HEADER -->
+
+<!-- / PAGE HEADER -->
+
+<!-- PRIMARY CONTENT WRAPPER -->
+<div class="myapp">
+  <div class="slds-scrollable--x">
+    <table class="slds-table slds-table--bordered">
+      <thead>
+        <tr>          
+          <th scope="col">Name</th>
+          <th scope="col">Type</th>
+          <th scope="col">Status</th>
+          <th scope="col">Progress</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each records}}
+        <tr>
+          <td><a href="/project/{{get this 'Id'}}">{{get this 'Name'}}</a> {{{badge this 'Rating'}}}</td>
+          <td>{{get this 'Type__c'}}</td>
+          <td>{{get this 'Status__c'}}</td>
+          <td>{{formatdecimal this 'Progress__c'}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- / PRIMARY CONTENT WRAPPER -->

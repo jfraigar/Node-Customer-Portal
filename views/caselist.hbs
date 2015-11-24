@@ -1,0 +1,83 @@
+<!-- MASTHEAD -->
+<p class="slds-text-heading--label slds-m-bottom--small">LISTA DE CHAMADOS</p>
+<!-- / MASTHEAD -->
+
+<!-- PAGE HEADER -->
+<div class="slds-page-header" role="banner">
+
+  <!-- LAYOUT GRID -->
+  <div class="slds-grid">
+
+    <!-- GRID COL -->
+    <div class="slds-col">
+
+      <!-- HEADING AREA -->
+      <!-- MEDIA OBJECT = FIGURE + BODY -->
+      <div class="slds-media">
+
+        <div class="slds-media__figure">
+          <span class="slds-avatar slds-avatar--large">
+            <img src="assets/images/avatar1.jpg" alt="portrait" />
+          </span>
+        </div>
+
+        <div class="slds-media__body">
+          <p class="slds-text-heading--label">SUPORTE</p>
+          <h1 class="slds-text-heading--medium">Meu Chamados</h1>
+        </div>
+
+      </div>
+      <!-- / MEDIA OBJECT -->
+      <!-- /HEADING AREA -->
+
+    </div>
+
+    <!-- GRID COL -->
+    <div class="slds-col slds-no-flex slds-align-middle">
+
+      <div class="slds-button-group" role="group">
+        <a class="slds-button slds-button--neutral" href="/novochamado">Novo Chamado</a>
+      </div>
+
+    </div>
+    <!-- / GRID COL -->
+
+  </div>
+  <!-- / LAYOUT GRID -->
+
+  <p class="slds-text-body--small slds-m-top--x-small">{{records.length}} items</p>
+
+</div>
+<!-- / PAGE HEADER -->
+
+<!-- PRIMARY CONTENT WRAPPER -->
+<div class="myapp">
+  <div class="slds-scrollable--x">
+    <table class="slds-table slds-table--bordered">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Subject</th>
+          <th scope="col">CaseNumber</th>
+          <th scope="col">Id</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each records}}
+        <tr>
+          <td>
+            <span class="slds-icon__container slds-icon-standard-account">
+              <svg aria-hidden="true" class="slds-icon">
+                <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#account"></use>
+            </svg><span class="slds-assistive-text">Account</span></span>
+          </td>
+          <td><a href="/{{get this 'Id'}}">{{get this 'CaseNumber'}}</a> {{{badge this 'Rating'}}}</td>
+          <td>{{get this 'CaseNumber'}}</td>
+          <td>{{get this 'Id'}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- / PRIMARY CONTENT WRAPPER -->

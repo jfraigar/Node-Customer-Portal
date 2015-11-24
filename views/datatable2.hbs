@@ -1,0 +1,88 @@
+<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+<style>
+tfoot {
+    display: table-header-group;
+}
+</style>
+<!-- MASTHEAD -->
+<nav class="slds-p-bottom--medium" role="navigation">
+  <p id="bread-crumb-label" class="slds-assistive-text">You are here:</p>
+  <ol class="slds-breadcrumb slds-list--horizontal" aria-labelledby="bread-crumb-label">
+    <a href="/project/" class="slds-button slds-button--neutral">Projects</a>
+    <a href="/topic/" class="slds-button slds-button--neutral">Topics</a>
+    <a href="/epic/" class="slds-button slds-button--neutral">Epics</a>
+    <a href="/item/" class="slds-button slds-button--neutral">Itens</a>
+    <a href="/sprint/" class="slds-button slds-button--neutral">Sprints</a>
+  </ol>
+</nav>
+<p class="slds-text-heading--label slds-m-bottom--small">Itens</p>
+<!-- / MASTHEAD -->
+
+<!-- PAGE HEADER -->
+
+<!-- / PAGE HEADER -->
+
+<!-- PRIMARY CONTENT WRAPPER -->
+<div class="myapp">
+  <div class="slds-scrollable--x">
+    <table class="slds-table slds-table--bordered" id="table_id">
+      <thead>
+        <tr class="slds-text-heading--label">          
+          <th class="slds-is-sortable" scope="col">caseNumber</th>
+          <th scope="col">Subject</th>
+          <th scope="col">Id</th>                 
+        </tr>
+      </thead>
+      <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </tfoot>
+      <tbody>
+        {{#each records}}
+        <tr>
+          <td><a href="/item/{{get this 'Id'}}">{{get this 'CaseNumber'}}</a></td>
+          <td>{{get this 'Subject'}}</td>
+          <td>{{get this 'Id'}}</td>         
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- / PRIMARY CONTENT WRAPPER -->
+
+<!-- DATATABLE SCRIPT -->
+<script>
+$(document).ready(function() {
+    $('#table_id').DataTable( {
+        initComplete: function () {
+            this.api().columns().every( function () {
+                var column = this;        
+                var title = column.header(); 
+                //alert( 'Column title clicked on: '+$(title).html() );
+                if($(title).html() == 'caseNumber'){
+
+                    var select = $('<select><option value=""></option></select>')
+                      .appendTo( $(column.footer()).empty() )
+                      .on( 'change', function () {
+                          var val = $.fn.dataTable.util.escapeRegex($(this).val());//               
+                          column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                      } );//.on( 'change', function () {
+             
+                    column.data().unique().sort().each( function ( d, j ) {
+                      select.append( '<option value="'+d+'">'+d+'</option>' )
+                    } );//column.data().unique().sort().each( function ( d, j ) {
+                }//if($(title).html() == 'caseNumber'){
+            } ); //this.api().columns().every( function () {
+        }// initComplete: function () {
+    } );// $('#table_id').DataTable( {
+} ); // $(document).ready(function()
+</script>
+<!-- / DATATABLE SCRIPT -->

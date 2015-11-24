@@ -1,0 +1,116 @@
+ <!-- DATATABLE -->
+<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+<style>
+tfoot {
+    display: table-header-group;
+}
+</style>
+<!-- DATATABLE -->
+<!-- MASTHEAD -->
+<nav class="slds-p-bottom--medium" role="navigation">
+  <p id="bread-crumb-label" class="slds-assistive-text">You are here:</p>
+  <ol class="slds-breadcrumb slds-list--horizontal" aria-labelledby="bread-crumb-label">
+    <a href="/project/" class="slds-button slds-button--brand">Projects</a>
+    <a href="/topic/" class="slds-button slds-button--brand">Topics</a>
+    <a href="/epic/" class="slds-button slds-button--brand">Epics</a>
+    <a href="/item/" class="slds-button slds-button--brand">Itens</a>
+    <a href="/sprint/" class="slds-button slds-button--brand">Sprints</a>
+    <a href="/logout/" class="slds-button slds-button--neutral">Logout</a>
+  </ol>
+</nav>
+<p class="slds-text-heading--label slds-m-bottom--small">Itens</p>
+<!-- / MASTHEAD -->
+
+<!-- PAGE HEADER -->
+<div class="slds-page-header" role="banner">
+
+  <!-- LAYOUT GRID -->
+  <div class="slds-grid">
+
+    <!-- GRID COL -->
+ 
+
+    <!-- GRID COL -->
+    <div class="slds-col slds-no-flex slds-align-middle">
+      <button class="slds-button slds-button--neutral {{button1}}" disabled="">Novo Chamado</button>      
+      <a class="slds-button slds-button--neutral {{button2}}" href="/item/new">Novo Chamado</a>      
+    </div>
+    <!-- / GRID COL -->
+
+  </div>
+  <!-- / LAYOUT GRID -->  
+
+</div>
+<!-- / PAGE HEADER -->
+
+<!-- PRIMARY CONTENT WRAPPER -->
+<div class="myapp">
+  <div class="slds-scrollable--x">
+    <table class="slds-table slds-table--bordered" id="table_id">
+      <thead>
+        <tr>          
+          <th scope="col">Name</th>
+          <th scope="col">Project</th>
+          <th scope="col">Epic</th>
+          <th scope="col">Priority</th>          
+          <th scope="col">Story Points</th>  
+          <th scope="col">Status</th>                  
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </tfoot>
+      <tbody>
+        {{#each records}}
+        <tr>
+          <td><a href="/item/{{get this 'Id'}}">{{get this 'Name'}}-{{get this 'Subject__c'}}</a></td>
+          <td>{{get this 'Project_Name__c'}}</td>
+          <td>{{get this 'Epic_Name__c'}}</td>    
+          <td>{{get this 'Priority__c'}}</td>       
+          <td>{{get this 'Story_Points__c'}}</td>
+          <td>{{get this 'Status__c'}}</td>         
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- / PRIMARY CONTENT WRAPPER -->
+<!-- DATATABLE SCRIPT -->
+<script>
+$(document).ready(function() {
+    $('#table_id').DataTable( {
+        initComplete: function () {
+            this.api().columns().every( function () {
+                var column = this;        
+                var title = column.header(); 
+                //alert( 'Column title clicked on: '+$(title).html() );
+                if($(title).html() == 'Project' || $(title).html() == 'Epic' || $(title).html() == 'Status'){
+                    var select = $('<select><option value=""></option></select>')
+                      .appendTo( $(column.footer()).empty() )
+                      .on( 'change', function () {
+                          var val = $.fn.dataTable.util.escapeRegex($(this).val());//               
+                          column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                      } );//.on( 'change', function () {
+             
+                    column.data().unique().sort().each( function ( d, j ) {
+                      select.append( '<option value="'+d+'">'+d+'</option>' )
+                    } );//column.data().unique().sort().each( function ( d, j ) {
+                }//if($(title).html() == 'caseNumber'){
+            } ); //this.api().columns().every( function () {
+        }// initComplete: function () {
+    } );// $('#table_id').DataTable( {
+} ); // $(document).ready(function()
+</script>
+<!-- / DATATABLE SCRIPT -->

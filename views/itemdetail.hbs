@@ -1,0 +1,187 @@
+<nav class="slds-p-bottom--medium" role="navigation">
+  <p id="bread-crumb-label" class="slds-assistive-text">You are here:</p>
+  <ol class="slds-breadcrumb slds-list--horizontal" aria-labelledby="bread-crumb-label">
+    <a href="/project/" class="slds-button slds-button--brand">Projects</a>
+    <a href="/topic/" class="slds-button slds-button--brand">Topics</a>
+    <a href="/epic/" class="slds-button slds-button--brand">Epics</a>
+    <a href="/item/" class="slds-button slds-button--brand">Itens</a>
+    <a href="/sprint/" class="slds-button slds-button--brand">Sprints</a>
+    <a href="/logout/" class="slds-button slds-button--neutral">Logout</a>
+  </ol>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="slds-page-header" role="banner">
+
+  <!-- PAGE HEADER TOP ROW -->
+  <div class="slds-grid">
+
+    <!-- PAGE HEADER / ROW 1 / COLUMN 1 -->
+    <div class="slds-col">
+
+      <!-- HEADING AREA -->
+      <!-- MEDIA OBJECT = FIGURE + BODY -->
+      <div class="slds-media">
+
+        <div class="slds-media__figure">
+          <svg aria-hidden="true" class="slds-icon slds-icon--large slds-icon-standard-user">
+            <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#case"></use>
+          </svg>
+        </div>
+
+        <div class="slds-media__body">
+          <p class="slds-text-heading--label">Item</p>
+          <h1 class="slds-text-heading--medium">{{get record 'Name'}}-{{get record 'Subject__c'}}</h1>
+        </div>
+
+        <div class="slds-media__body">
+          <p class="slds-text-heading--label">Status</p>
+          <h1 class="slds-text-heading--medium">{{get record 'Status__c'}}</h1>
+        </div>
+
+        <div class="slds-media__body">
+          <p class="slds-text-heading--label">Priority</p>
+          <h1 class="slds-text-heading--medium">{{get record 'Priority__c'}}</h1>
+        </div>
+
+      </div>
+      <!-- / MEDIA OBJECT -->
+      <!-- HEADING AREA -->
+
+    </div>
+    <!-- / PAGE HEADER / ROW 1 / COLUMN 1 -->
+
+    <!-- PAGE HEADER / ROW 1 / COLUMN 2 -->
+
+    <!-- / PAGE HEADER / ROW 1 / COLUMN 2 -->
+
+  </div>
+  <!-- / PAGE HEADER TOP ROW -->
+
+  <!-- PAGE HEADER DETAIL ROW -->
+  <div class="slds-grid slds-page-header__detail-row">
+
+    <!-- PAGE HEADER / ROW 2 / COLUMN 1 -->
+    <div class="slds-col--padded slds-size--1-of-4">
+      <dl>
+        <dt>
+          <p class="slds-text-heading--label slds-truncate">Story Points</p>
+        </dt>
+        <dd>{{get record 'Story_Points__c'}}</dd>
+      </dl>
+    </div>
+
+    <!-- PAGE HEADER / ROW 2 / COLUMN 2 -->
+    <div class="slds-col--padded slds-size--1-of-4">
+      <dl>
+        <dt>
+          <p class="slds-text-heading--label slds-truncate">Sprint</p>
+        </dt>
+        <dd><a href="/sprint/{{get record 'Sprint__c'}}">{{get record 'Sprint_Name__c'}}</a></dd>
+      </dl>
+    </div>
+
+  </div>
+  <!-- / PAGE HEADER DETAIL ROW -->
+
+</div>
+<!-- / PAGE HEADER -->
+
+<!-- PRIMARY CONTENT WRAPPER -->
+<div class="myapp">
+
+<!-- RELATED LIST CARDS-->
+
+<div class="slds-grid slds-m-top--large">
+
+<!-- MAIN CARD Description & Assumptions-->
+<div class="slds-col slds-col-rule--right slds-p-right--large slds-size--6-of-12">
+
+  <div class="slds-card">
+
+    <header class="slds-card__header slds-grid">
+      <div class="slds-col slds-media slds-media--center">
+        <div class="slds-media__figure">
+          <svg aria-hidden="true" class="slds-icon slds-icon-standard-contact slds-icon--small">
+            <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#contract"></use>
+          </svg>
+        </div>
+        <div class="slds-media__body">
+          <h3 class="slds-text-heading--small">Description & Assumptions</h3>
+        </div>
+      </div>
+    </header>
+
+
+    <!-- CARD BODY = TABLE -->
+    <section class="slds-card__body">
+      <div class="slds-tile">
+        <p class="slds-tile__title slds-truncate"><a href="#">Description</a></p>
+          <div class="slds-tile__detail slds-text-body--small">
+        <p class="slds-truncate">{{{get record 'Description__c'}}}</p>
+          </div>
+      </div>  
+      <div class="slds-tile">
+        <p class="slds-tile__title slds-truncate"><a href="#">Assumptions</a></p>
+          <div class="slds-tile__detail slds-text-body--small">
+        <p class="slds-truncate">{{{get record 'Assumptions__c'}}}</p>
+          </div>
+      </div>
+    </section>
+
+    <!-- / CARD BODY = SECTION + TABLE -->
+
+
+  </div>
+
+</div>
+<!-- / MAIN CARD Description & Assumptions-->
+
+
+<!-- COMPACT CARD Cases-->
+<div class="slds-col slds-p-left--large slds-size--6-of-12">
+  <div class="slds-card">
+
+    <header class="slds-card__header slds-grid">
+      <div class="slds-col slds-media slds-media--center">
+        <div class="slds-media__figure">
+          <svg aria-hidden="true" class="slds-icon slds-icon-standard-contact slds-icon--small">
+            <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#contract"></use>
+          </svg>
+        </div>
+        <div class="slds-media__body">
+          <h3 class="slds-text-heading--small">Cases</h3>
+        </div>
+      </div>
+    </header>
+
+
+    <!-- CARD BODY = TABLE -->
+    <section class="slds-card__body">
+      <div class="slds-tile">
+        <p class="slds-tile__title slds-truncate"><a href="#">Good</a></p>
+          <div class="slds-tile__detail slds-text-body--small">
+        <p class="slds-truncate">{{{get record 'Good_Cases__c'}}}</p>
+          </div>
+      </div>  
+      <div class="slds-tile">
+        <p class="slds-tile__title slds-truncate"><a href="#">Bad</a></p>
+          <div class="slds-tile__detail slds-text-body--small">
+        <p class="slds-truncate">{{{get record 'bad_Cases__c'}}}</p>
+          </div>
+      </div>
+    </section>
+
+    <!-- / CARD BODY = SECTION + TABLE -->
+
+  </div>  
+
+</div>
+<!-- / COMPACT CARD Cases-->
+
+
+</div>
+<!-- / RELATED LIST CARDS -->
+
+</div>
+<!-- / PRIMARY CONTENT WRAPPER -->
