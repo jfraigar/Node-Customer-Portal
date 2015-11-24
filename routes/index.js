@@ -1,15 +1,18 @@
 console.log('index.js--> start');
 
 var express = require('express');
+
 var router = express.Router();
 
 var Promise = require("bluebird");
 
 var nforce = require('nforce');
+
 var org = require('../lib/connection');
 
 var atoken;
 
+console.log('index.js--> requireLogin');
 function requireLogin (req, res, next) {
   if (!req.session.atoken) {
     res.redirect('/login/');
@@ -19,6 +22,7 @@ function requireLogin (req, res, next) {
   }
 };
 
+console.log('index.js--> requireSupport');
 function requireSupport (req, res, next) {
   if (!req.session.support) {
     console.log('User No Eligible for Support!!');    
