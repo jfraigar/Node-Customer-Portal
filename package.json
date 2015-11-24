@@ -20,6 +20,7 @@
     "morgan": "~1.5.1",
     "nforce": "^1.2.3",
     "numeral": "^1.5.3",
+    "raygun": "^0.8.0",
     "readable-stream": "^2.0.4",
     "serve-favicon": "~2.2.0"
   }
