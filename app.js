@@ -97,8 +97,8 @@ app.use(function(err, req, res, next) {
 
 app.use(raygunClient.expressHandler);
 raygunClient.send('raygun gun gun');
-var err = new Error('help!');
-throw err;
+//var err = new Error('help!');
+//throw err;
 
 module.exports = app;
 
