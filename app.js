@@ -1,3 +1,4 @@
+console.log('app.js--> start');
 var express = require('express');
 var path = require('path');
 //var favicon = require('serve-favicon');
@@ -6,23 +7,26 @@ var expressSession = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+console.log('app.js--> ./lib/hbsHelpers');
 // register the hanglebars helpers
 require('./lib/hbsHelpers');
 // connect to salesforce org
 require('./lib/connection');
 
+console.log('app.js--> ./routes/index');
 //var routes = require('./routes/index');
 var routes = require('./routes/index');
 //var caseroutes = require('./routes/case');
 
+console.log('app.js-->var app = express();');
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
-console.log('YYUUUJUU');
-console.log('app.get(env)-->' + app.get('env'));
-console.log('process.env.NODE_ENV-->' + process.env.NODE_ENV);
+
+console.log('app.js-->app.get(env)-->' + app.get('env'));
+console.log('app.js-->process.env.NODE_ENV-->' + process.env.NODE_ENV);
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
@@ -89,3 +93,5 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
+
+console.log('aapp.js--> end');
