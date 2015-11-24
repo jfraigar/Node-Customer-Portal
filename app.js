@@ -9,7 +9,7 @@ var bodyParser = require('body-parser');
 
 console.log('app.js--> var raygun = require(raygun);');
 var raygun = require('raygun');
-var raygunClient = new raygun.Client().init({ apiKey: '{{8iA/gZwcXIIvak6Q1/4e4w==}}' });
+var raygunClient = new raygun.Client().init({ apiKey: '8iA/gZwcXIIvak6Q1/4e4w==' });
 
 console.log('app.js--> ./lib/hbsHelpers');
 // register the hanglebars helpers
