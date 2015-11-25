@@ -47,6 +47,10 @@ try{
   raygunClient.send(err);
 }*/
 
+/* home page. */
+router.get('/', function(req, res, next) {
+  res.redirect('login');
+});
 
 /****************************************************PROJECT START**********************************************/
 /* list page. */
