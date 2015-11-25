@@ -73,8 +73,14 @@ tfoot {
         {{#each records}}
         <tr>
           <td><a href="/item/{{get this 'Id'}}">{{get this 'Name'}}-{{get this 'Subject__c'}}</a></td>
-          <td>{{get this 'Project_Name__c'}}</td>
-          <td>{{get this 'Epic_Name__c'}}</td>    
+          <td><a href="/project/{{get this 'Project_Id__c'}}">{{get this 'Project_Name__c'}}</a></td>
+          <td>
+              {{#if (get this 'isProject__c')}}
+              <a href="/epic/{{get this 'Epic_Id__c'}}">{{get this 'Epic_Name__c'}}</a>
+              {{else}}
+              {{get this 'Epic_Name__c'}}
+              {{/if}}
+          </td>    
           <td>{{get this 'Priority__c'}}</td>       
           <td>{{get this 'Story_Points__c'}}</td>
           <td>{{get this 'Status__c'}}</td>         
