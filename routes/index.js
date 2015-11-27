@@ -13,13 +13,14 @@ var nforce = require('nforce');
 
 var org = require('../lib/connection');
 
-var atoken;
+var username, atoken;
 
 console.log('index.js--> requireLogin');
 function requireLogin (req, res, next) {
-  if (!req.session.atoken) {
+  if (!req.session.username) {
     res.redirect('/login/');
   } else {
+    username = req.session.username;
     atoken = req.session.atoken;
     next();
   }
@@ -36,8 +37,8 @@ function requireSupport (req, res, next) {
 };
 
 raygunClient.user = function (req, res, next) {
-  console.log('index.js-->raygunClient.user: ' +atoken);
-  return atoken;  
+  console.log('index.js-->raygunClient.user: ' +username);
+  return username;  
 }
 /*
 try{  
@@ -55,7 +56,7 @@ router.get('/', function(req, res, next) {
 /****************************************************PROJECT START**********************************************/
 /* list page. */
 router.get('/project/', requireLogin, function(req, res, next) {  
-  org.query({ query: "Select Id,Name,Type__c,Vision__c,Constrains__c,Estimated_Price__c,Actual_Price__c,Real_Price__c, Estimated_Story_Points__c,Price_per_SP__c, Safety_Buffer__c,Story_Points__c,Story_Points_Done__c, Status__c, Progress__c From Project__c Where Account__r.aToken__c = '" +atoken+ "' Order By LastModifiedDate DESC" })
+  org.query({ query: "Select Id,Name,Type__c,Vision__c,Constrains__c,Estimated_Price__c,Actual_Price__c,Real_Price__c, Estimated_Story_Points__c,Price_per_SP__c, Safety_Buffer__c,Story_Points__c,Story_Points_Done__c, Status__c, Progress__c From Project__c Where Account__r.atoken__c = '" +atoken+ "' Order By LastModifiedDate DESC" })
     .then(function(results){
       res.render('projectlist', { records: results.records });
     }).catch( function(e) {
@@ -69,8 +70,8 @@ router.get('/project/', requireLogin, function(req, res, next) {
 router.get('/project/:id', requireLogin, function(req, res, next) {  
   // query for record, contacts and opportunities
   Promise.join(
-    org.query({ query: "Select Id,Name,Type__c,isProject__c, Active__c,Start_Date_Formatted__c,End_Date_Formatted__c,Start_Date__c,End_Date__c,Vision__c,Constrains__c,Estimated_Price__c,Actual_Price__c,Real_Price__c, Estimated_Story_Points__c,Price_per_SP__c, Safety_Buffer__c,Story_Points__c,Story_Points_Done__c, Status__c, Progress__c From Project__c Where id = '"+req.params.id+"' and Account__r.aToken__c = '" +atoken+ "' LIMIT 1" }),
-    org.query({ query: "Select Id, Name, Progress__c, Story_Points__c From Topic__c where Project__c = '" + req.params.id + "' and Project__r.Account__r.aToken__c = '" +atoken+ "'"}),
+    org.query({ query: "Select Id,Name,Type__c,isProject__c, Active__c,Start_Date_Formatted__c,End_Date_Formatted__c,Start_Date__c,End_Date__c,Vision__c,Constrains__c,Estimated_Price__c,Actual_Price__c,Real_Price__c, Estimated_Story_Points__c,Price_per_SP__c, Safety_Buffer__c,Story_Points__c,Story_Points_Done__c, Status__c, Progress__c From Project__c Where id = '"+req.params.id+"' and Account__r.atoken__c = '" +atoken+ "' LIMIT 1" }),
+    org.query({ query: "Select Id, Name, Progress__c, Story_Points__c From Topic__c where Project__c = '" + req.params.id + "' and Project__r.Account__r.atoken__c = '" +atoken+ "'"}),
     org.apexRest({uri:'Project', urlParams: {id: req.params.id , atoken: atoken} }),
     function(project, topics, months) {
         console.log('months--> ' +JSON.stringify(months));
@@ -92,7 +93,7 @@ router.get('/project/:id', requireLogin, function(req, res, next) {
 /****************************************************TOPIC START**********************************************/
 /* list page. */
 router.get('/topic/', requireLogin, function(req, res, next) {
-  org.query({ query: "Select Id,Name,Project__c,Description__c, Assumptions__c, Story_Points__c,Story_Points_Done__c, Progress__c From Topic__c Where Project__r.Account__r.aToken__c = '" +atoken+ "' and Name != 'Default' Order By LastModifiedDate DESC" })
+  org.query({ query: "Select Id,Name,Project__c,Description__c, Assumptions__c, Story_Points__c,Story_Points_Done__c, Progress__c From Topic__c Where Project__r.Account__r.atoken__c = '" +atoken+ "' and Name != 'Default' Order By LastModifiedDate DESC" })
     .then(function(results){
       res.render('topiclist', { records: results.records });
     }).catch( function(e) {
@@ -107,8 +108,8 @@ router.get('/topic/', requireLogin, function(req, res, next) {
 router.get('/topic/:id', requireLogin, function(req, res, next) {
   // query for record, contacts and opportunities
   Promise.join(
-    org.query({ query: "Select Id,Name,Project__c,Description__c, Assumptions__c, Story_Points__c,Story_Points_Done__c, Progress__c From Topic__c Where id = '"+req.params.id+"' and Project__r.Account__r.aToken__c = '" +atoken+ "' LIMIT 1" }),
-    org.query({ query: "Select Id, Name, Topic__c, Progress__c,Description__c, Assumptions__c, Story_Points__c,Story_Points_Done__c From Epic__c where Topic__c = '" + req.params.id + "' and Topic__r.Project__r.Account__r.aToken__c = '" +atoken+ "' "}),
+    org.query({ query: "Select Id,Name,Project__c,Description__c, Assumptions__c, Story_Points__c,Story_Points_Done__c, Progress__c From Topic__c Where id = '"+req.params.id+"' and Project__r.Account__r.atoken__c = '" +atoken+ "' LIMIT 1" }),
+    org.query({ query: "Select Id, Name, Topic__c, Progress__c,Description__c, Assumptions__c, Story_Points__c,Story_Points_Done__c From Epic__c where Topic__c = '" + req.params.id + "' and Topic__r.Project__r.Account__r.atoken__c = '" +atoken+ "' "}),
     function(topic, epics) {
         res.render('topicdetail', { record: topic.records[0], epics: epics.records });
   }).catch( function(e) {
@@ -124,7 +125,7 @@ router.get('/topic/:id', requireLogin, function(req, res, next) {
 /* list page. */
 router.get('/epic/', requireLogin, function(req, res, next) {
 
-  org.query({ query: "Select Id, Name, Topic__c, Progress__c,Description__c, Assumptions__c, Story_Points__c,Story_Points_Done__c From Epic__c Where Topic__r.Project__r.Account__r.aToken__c = '" +atoken+ "' and Name != 'Default' Order By LastModifiedDate DESC" })
+  org.query({ query: "Select Id, Name, Topic__c, Progress__c,Description__c, Assumptions__c, Story_Points__c,Story_Points_Done__c From Epic__c Where Topic__r.Project__r.Account__r.atoken__c = '" +atoken+ "' and Name != 'Default' Order By LastModifiedDate DESC" })
     .then(function(results){
       res.render('epiclist', { records: results.records });
     }).catch( function(e) {
@@ -138,8 +139,8 @@ router.get('/epic/', requireLogin, function(req, res, next) {
 router.get('/epic/:id', requireLogin, function(req, res, next) {
   // query for record, contacts and opportunities
   Promise.join(
-    org.query({ query: "Select Id, Name, Topic__c, Progress__c,Description__c, Assumptions__c, Story_Points__c,Story_Points_Done__c From Epic__c Where id = '" +req.params.id+ "' and Topic__r.Project__r.Account__r.aToken__c = '" +atoken+ "' LIMIT 1" }),
-    org.query({ query: "Select Id, Name, Story_Points__c, Status__c From Item__c where Epic__c = '" + req.params.id + "' and Epic__r.Topic__r.Project__r.Account__r.aToken__c = '" +atoken+ "'"}),
+    org.query({ query: "Select Id, Name, Topic__c, Progress__c,Description__c, Assumptions__c, Story_Points__c,Story_Points_Done__c From Epic__c Where id = '" +req.params.id+ "' and Topic__r.Project__r.Account__r.atoken__c = '" +atoken+ "' LIMIT 1" }),
+    org.query({ query: "Select Id, Name, Story_Points__c, Status__c From Item__c where Epic__c = '" + req.params.id + "' and Epic__r.Topic__r.Project__r.Account__r.atoken__c = '" +atoken+ "'"}),
     function(epic, itens) {
         res.render('epicdetail', { record: epic.records[0], itens: itens.records });
     }).catch( function(e) {
@@ -154,7 +155,7 @@ router.get('/epic/:id', requireLogin, function(req, res, next) {
 /****************************************************ITEM START**********************************************/
 /* list page. */
 router.get('/item/', requireLogin, function(req, res, next) {
-  org.query({ query: "Select Id, Name, isProject__c, Project_Id__c, Subject__c, Priority__c, Sprint__c, Story_Points__c, Status__c, Sprint_Name__c, Epic_Name__c, Project_Name__c From Item__c Where Epic__r.Topic__r.Project__r.Account__r.aToken__c = '" +atoken+ "' Order By LastModifiedDate DESC" })
+  org.query({ query: "Select Id, Name, isProject__c, Project_Id__c, Subject__c, Priority__c, Sprint__c, Story_Points__c, Status__c, Sprint_Name__c, Epic_Name__c, Project_Name__c From Item__c Where Epic__r.Topic__r.Project__r.Account__r.atoken__c = '" +atoken+ "' Order By LastModifiedDate DESC" })
     .then(function(results){
       var button1, button2;
       if(req.session.support == true){
@@ -184,7 +185,7 @@ router.post('/item/new', requireSupport, requireLogin, function(req, res, next) 
   it.set('Priority_user_input__c', req.body.priority);
   it.set('Description__c', req.body.description);
   it.set('Contact__c', req.session.contactid);
-  it.set('Origem__c', 'Online'); 
+  it.set('Origem__c', 'Portal'); 
   console.log('New Item--> ' + JSON.stringify(it));
 
   org.insert({ sobject: it })
@@ -201,8 +202,8 @@ router.post('/item/new', requireSupport, requireLogin, function(req, res, next) 
 router.get('/item/:id', requireLogin, function(req, res, next) {
   // query for record, contacts and opportunities
   Promise.join(
-    org.query({ query: "Select Id, Name, Subject__c, Description__c, Assumptions__c, Priority__c, Story_Points__c, Status__c, Sprint_Name__c, Epic_Name__c, Project_Name__c, Good_Cases__c, Bad_Cases__c From Item__c Where id = '" +req.params.id+ "' and Epic__r.Topic__r.Project__r.Account__r.aToken__c = '" +atoken+ "' LIMIT 1" }),
-    org.query({ query: "Select Id, Name From Comment__c where Item__c = '" + req.params.id + "' and Item__r.Epic__r.Topic__r.Project__r.Account__r.aToken__c = '" +atoken+ "' "}),
+    org.query({ query: "Select Id, Name, Sprint__c, Subject__c, Description__c, Assumptions__c, Priority__c, Story_Points__c, Status__c, Sprint_Name__c, Epic_Name__c, Project_Name__c, Good_Cases__c, Bad_Cases__c From Item__c Where id = '" +req.params.id+ "' and Epic__r.Topic__r.Project__r.Account__r.atoken__c = '" +atoken+ "' LIMIT 1" }),
+    org.query({ query: "Select Id, Name From Comment__c where Item__c = '" + req.params.id + "' and Item__r.Epic__r.Topic__r.Project__r.Account__r.atoken__c = '" +atoken+ "' "}),
     function(item, comments ) {
         res.render('itemdetail', { record: item.records[0], comments: comments.records });
   }).catch( function(e) {
@@ -226,7 +227,7 @@ router.get('/item/:id', requireLogin, function(req, res, next) {
 /* list page. */
 router.get('/sprint/', requireLogin, function(req, res, next) {
 
-  org.query({ query: "Select campochungo Id, Name, Start_Date__c, Deploy_Date__c From Sprint__c Where Id IN (Select Sprint__c From Item__c Where Epic__r.Topic__r.Project__r.Account__r.aToken__c = '" +atoken+ "') Order By LastModifiedDate DESC" })
+  org.query({ query: "Select Id, Name, Start_Date_Formatted__c, Deploy_Date_Formatted__c, End_Date_Formatted__c From Sprint__c Where Id IN (Select Sprint__c From Sprint_Item__c Where Item__r.Epic__r.Topic__r.Project__r.Account__r.atoken__c = '" +atoken+ "') Order By LastModifiedDate DESC" })
     .then(function(results){
       res.render('sprintlist', { records: results.records });
     }).catch( function(e) {
@@ -241,8 +242,8 @@ router.get('/sprint/', requireLogin, function(req, res, next) {
 router.get('/sprint/:id', requireLogin, function(req, res, next) {
   // query
   Promise.join(
-    org.query({ query: "Select campochungo Name, Start_Date__c, Deploy_Date__c From Sprint__c Where Id = '" +req.params.id+ "' and Id IN (Select Sprint__c From Item__c Where Epic__r.Topic__r.Project__r.Account__r.aToken__c = '" +atoken+ "') LIMIT 1" }),
-    org.query({ query: "Select Id, Name, Status__c, Story_Points__c, Epic_Name__c, Project_Name__c From Item__c where Sprint__c = '" + req.params.id + "' and Epic__r.Topic__r.Project__r.Account__r.aToken__c = '" +atoken+ "' "}),
+    org.query({ query: "Select Name, Start_Date_Formatted__c, Deploy_Date_Formatted__c, End_Date_Formatted__c From Sprint__c Where Id = '" +req.params.id+ "' and Id IN (Select Sprint__c From Sprint_Item__c Where Item__r.Epic__r.Topic__r.Project__r.Account__r.atoken__c = '" +atoken+ "') LIMIT 1" }),
+    org.query({ query: "Select Id, Item__c, Item_Name__c, Item_Subject__c, Status__c, Story_Points__c, Epic_Name__c, Project_Name__c From Sprint_Item__c where Sprint__c = '" + req.params.id + "' and Item__r.Epic__r.Topic__r.Project__r.Account__r.atoken__c = '" +atoken+ "' "}),
     function(sprint, itens ) {
         res.render('sprintdetail', { record: sprint.records[0], itens: itens.records });
   }).catch( function(e) {
@@ -264,8 +265,8 @@ router.get('/login/', function(req, res){
              '<button type="submit">Submit</button>' +
              '</form>';
 
-  if (req.session.atoken) {
-    html += '<br>Your atoken from your session is: ' + req.session.atoken;
+  if (req.session.username) {
+    html += '<br>Your username from your session is: ' + req.session.username;
   }
   if (req.session.msg) {
     html += '<br>Error: ' + req.session.msg;
@@ -276,16 +277,17 @@ router.get('/login/', function(req, res){
 });
 
 router.post('/login/', function(req, res, next){
-  var atoken;
-  org.query({ query: "Select Id, Name, Account.Eligible_for_Support__c, Account.atoken__c From Contact where username__c = '" + req.body.username + "'and password__c =  '" + req.body.password + "' LIMIT 1"})
+  //var username, atoken;
+  org.query({ query: "Select Id, Name, Account.Eligible_for_Support__c, Username__c, Account.aToken__c From Contact where Portal_User__c = true and username__c = '" + req.body.username + "'and password__c =  '" + req.body.password + "' LIMIT 1"})
     .then(function(result){      
       console.log('result-->' + JSON.stringify(result));
       console.log('result.records.length-->' + result.records.length);
       if (result.totalSize != 0){
         result3 = JSON.stringify(result);
         result3 = JSON.parse(result3);
-        console.log('records[0].name -->' + result3.records[0].name);     
-        req.session.atoken = result3.records[0].account.aToken__c;
+        console.log('records[0].name -->' + result3.records[0].name); 
+        req.session.atoken = result3.records[0].account.aToken__c;    
+        req.session.username = result3.records[0].username__c;
         req.session.support = result3.records[0].account.Eligible_for_Support__c;
         req.session.contactid = result3.records[0].id;
         console.log('set session-->' + JSON.stringify(req.session));
@@ -293,6 +295,7 @@ router.post('/login/', function(req, res, next){
         res.redirect('/item/');
       }else {
         req.session.atoken = null;
+        req.session.username = null;
         req.session.support = null;
         req.session.contactid =  null;
         req.session.destroy;

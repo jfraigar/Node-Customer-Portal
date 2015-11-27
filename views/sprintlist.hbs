@@ -25,15 +25,17 @@
         <tr>          
           <th scope="col">Name</th>
           <th scope="col">Start Date</th>  
-          <th scope="col">Deploy Date</th>                  
+          <th scope="col">Deploy Date</th>  
+          <th scope="col">End Date</th>                 
         </tr>
       </thead>
       <tbody>
         {{#each records}}
         <tr>
           <td><a href="/sprint/{{get this 'Id'}}">{{get this 'Name'}}</a></td>
-          <td>{{get this 'Start_Date__c'}}</td>   
-          <td>{{get this 'Deploy_Date__c'}}</td>       
+          <td>{{get this 'Start_Date_Formatted__c'}}</td>   
+          <td>{{get this 'Deploy_Date_Formatted__c'}}</td>  
+          <td>{{get this 'End_Date_Formatted__c'}}</td>      
         </tr>
         {{/each}}
       </tbody>
