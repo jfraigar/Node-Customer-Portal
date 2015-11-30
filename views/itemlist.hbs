@@ -72,12 +72,12 @@ td2
     <table class="slds-table slds-table--bordered" id="table_id">
       <thead>
         <tr>          
-          <th scope="col" class="slds-size--1-of-6 slds-shrink">Name</th>
-          <th scope="col" class="slds-size--1-of-6 slds-shrink">Sprint</th>
-          <th scope="col" class="slds-size--1-of-6 slds-shrink">Epic</th>
-          <th scope="col" class="slds-size--1-of-6">Priority</th>          
-          <th scope="col" class="slds-size--1-of-6">Story Points</th>  
-          <th scope="col" class="slds-size--1-of-6 slds-shrink">Status</th>                  
+          <th scope="col">Name</th>
+          <th scope="col">Sprint</th>
+          <th scope="col">Epic</th>
+          <th scope="col">Priority</th>          
+          <th scope="col">Story Points</th>  
+          <th scope="col">Status</th>                  
         </tr>
       </thead>
       <tfoot>
@@ -93,18 +93,18 @@ td2
       <tbody>
         {{#each records}}
         <tr>
-          <td class="slds-size--1-of-6 slds-truncate" title="{{get this 'Name'}}-{{get this 'Subject__c'}}"><a href="/item/{{get this 'Id'}}">{{get this 'Name'}}-{{get this 'Subject__c'}}</a></td>
-          <td class="slds-size--1-of-6"><a href="/sprint/{{get this 'Sprint__c'}}">{{get this 'Sprint_Name__c'}}</a></td>
-          <td class="slds-size--1-of-6">
+          <td class="slds-shrink slds-truncate" title="{{get this 'Name'}}-{{get this 'Subject__c'}}"><a href="/item/{{get this 'Id'}}">{{get this 'Name'}}-{{get this 'Subject__c'}}</a></td>
+          <td class="slds-shrink"><a href="/sprint/{{get this 'Sprint__c'}}">{{get this 'Sprint_Name__c'}}</a></td>
+          <td class="slds-shrink">
               {{#if (get this 'isProject__c')}}
               <a href="/epic/{{get this 'Epic_Id__c'}}">{{get this 'Epic_Name__c'}}</a>
               {{else}}
               {{get this 'Epic_Name__c'}}
               {{/if}}
           </td>    
-          <td class="slds-size--1-of-6">{{get this 'Priority__c'}}</td>       
-          <td class="slds-size--1-of-6">{{get this 'Story_Points__c'}}</td>
-          <td class="slds-size--1-of-6">{{get this 'Status__c'}}</td>         
+          <td class="slds-shrink">{{get this 'Priority__c'}}</td>       
+          <td class="slds-shrink">{{get this 'Story_Points__c'}}</td>
+          <td class="slds-shrink">{{get this 'Status__c'}}</td>         
         </tr>
         {{/each}}
       </tbody>

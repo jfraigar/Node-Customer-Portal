@@ -203,7 +203,7 @@ router.get('/item/:id', requireLogin, function(req, res, next) {
   // query for record, contacts and opportunities
   Promise.join(
     org.query({ query: "Select Id, Name, Sprint__c, Subject__c, Description__c, Assumptions__c, Priority__c, Story_Points__c, Status__c, Sprint_Name__c, Epic_Name__c, Project_Name__c, Good_Cases__c, Bad_Cases__c From Item__c Where id = '" +req.params.id+ "' and Epic__r.Topic__r.Project__r.Account__r.atoken__c = '" +atoken+ "' LIMIT 1" }),
-    org.query({ query: "Select Id, Name From Comment__c where Item__c = '" + req.params.id + "' and Item__r.Epic__r.Topic__r.Project__r.Account__r.atoken__c = '" +atoken+ "' "}),
+    org.query({ query: "Select Id, Name, Body__c, Item__c, Created_by__c, CreatedDate_Formatted__c From Comment__c where Item__c = '" + req.params.id + "' and Item__r.Epic__r.Topic__r.Project__r.Account__r.atoken__c = '" +atoken+ "' Order by CreatedDate desc"}),
     function(item, comments ) {
         res.render('itemdetail', { record: item.records[0], comments: comments.records });
   }).catch( function(e) {
@@ -219,7 +219,32 @@ router.get('/item/:id', requireLogin, function(req, res, next) {
 /****************************************************ITEM END**********************************************/
 
 /****************************************************COMMENT START**********************************************/
+/* Display new form */
+router.get('/comment/new', requireSupport, requireLogin, function(req, res, next) {
+  console.log('req.query.itemid--> ' + req.query.itemid);  
+  res.render('commentnew' , { itemid: req.query.itemid });
+});
 
+/* Creates a new the record */
+router.post('/comment/new', requireSupport, requireLogin, function(req, res, next) {
+  console.log('req.body.itemid--> ' + itid);
+  var itid = req.body.itemid;  
+  var comment = nforce.createSObject('Comment__c');
+  comment.set('Body__c', req.body.commentbody);
+  comment.set('Item__c', itid);
+  comment.set('Contact__c', req.session.contactid);
+  comment.set('Origem__c', 'Portal'); 
+  console.log('New Comment--> ' + JSON.stringify(comment));
+
+  org.insert({ sobject: comment })
+    .then(function(item){
+      res.redirect('/item/' + itid);
+    }).catch( function(e) {
+      console.log(e);
+      raygunClient.send(e);
+      next(e);
+    });
+});
 
 /****************************************************COMMENT END**********************************************/
 

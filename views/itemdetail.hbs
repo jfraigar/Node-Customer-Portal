@@ -34,15 +34,6 @@
           <h1 class="slds-text-heading--medium">{{get record 'Name'}}-{{get record 'Subject__c'}}</h1>
         </div>
 
-        <div class="slds-media__body">
-          <p class="slds-text-heading--label">Status</p>
-          <h1 class="slds-text-heading--medium">{{get record 'Status__c'}}</h1>
-        </div>
-
-        <div class="slds-media__body">
-          <p class="slds-text-heading--label">Priority</p>
-          <h1 class="slds-text-heading--medium">{{get record 'Priority__c'}}</h1>
-        </div>
 
       </div>
       <!-- / MEDIA OBJECT -->
@@ -65,9 +56,28 @@
     <div class="slds-col--padded slds-size--1-of-4">
       <dl>
         <dt>
+          <p class="slds-text-heading--label slds-truncate">Priority</p>
+        </dt>
+        <dd>{{get record 'Priority__c'}}</dd>
+      </dl>
+    </div>
+
+
+    <div class="slds-col--padded slds-size--1-of-4">
+      <dl>
+        <dt>
           <p class="slds-text-heading--label slds-truncate">Story Points</p>
         </dt>
         <dd>{{get record 'Story_Points__c'}}</dd>
+      </dl>
+    </div>
+
+    <div class="slds-col--padded slds-size--1-of-4">
+      <dl>
+        <dt>
+          <p class="slds-text-heading--label slds-truncate">Status</p>
+        </dt>
+        <dd>{{get record 'Status__c'}}</dd>
       </dl>
     </div>
 
@@ -185,3 +195,65 @@
 
 </div>
 <!-- / PRIMARY CONTENT WRAPPER -->
+
+<!-- / COMMENTS WRAPPER -->
+<div class="myapp">
+  <!-- RELATED LIST CARDS-->
+<div class="slds-grid slds-m-top--large">
+
+<div class="slds-col slds-p-left--large slds-size--12-of-12">
+
+  <div class="slds-card">
+
+    <header class="slds-card__header slds-grid">
+      <div class="slds-col slds-media slds-media--center">
+        <div class="slds-media__figure">
+          <svg aria-hidden="true" class="slds-icon slds-icon-standard-lead slds-icon--small">
+            <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#case_comment"></use>
+          </svg>
+        </div>
+        <div class="slds-media__body">
+          <h3 class="slds-text-heading--small">Comments</h3>
+        </div>
+      </div>
+      <div class="slds-col slds-no-flex">
+        <button class="slds-button slds-button--neutral slds-button--small">
+          <a href="/comment/new?itemid={{get record 'id'}}">Add</a>
+        </button>
+      </div>  
+    </header>
+
+    <section class="slds-card__body">
+      <!--<div class="slds-scrollable--x">-->
+        <table class="slds-table slds-table--bordered">
+          <thead>
+            <tr class="slds-no-hover">
+              <th class="slds-text-heading--label slds-size--1-of-6" scope="col">Created by</th>        
+              <th class="slds-text-heading--label slds-size--4-of-6" scope="col">Comment</th>
+              <th class="slds-text-heading--label slds-size--1-of-6" scope="col">Date</th>                
+            </tr>
+          </thead>
+          <tbody>
+            {{#each comments}}
+            <tr class="slds-hint-parent">
+              <td class="slds-size--1-of-6" data-label="Created by">{{get this 'Created_by__c'}}</td>                                    
+              <td class="slds-size--4-of-6" data-label="Comment">{{{get this 'Body__c'}}}</td>
+              <td class="slds-size--4-of-6" data-label="Date">{{get this 'CreatedDate_Formatted__c'}}</td>                    
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      <!--</div>-->
+    </section>
+
+    <footer class="slds-card__footer">
+      
+    </footer>
+
+  </div>
+
+</div>
+
+</div>
+  <!-- / RELATED LIST CARDS -->
+</div>
