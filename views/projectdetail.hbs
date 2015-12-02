@@ -104,7 +104,7 @@
           <p class="slds-text-heading--label slds-truncate">Status</p>
         </dt>
         <dd>         
-          <p class="slds-text-body--regular slds-truncate">{{get record 'Status__c'}}</p>         
+          <p class="slds-text-body--regular slds-truncate">{{get record 'Status_formula__c'}}</p>         
         </dd>
       </dl>
       {{/if}}
@@ -149,13 +149,13 @@
       <div class="slds-tile">
         <p class="slds-tile__title slds-truncate"><a href="#">Vision</a></p>
           <div class="slds-tile__detail slds-text-body--small">
-        <p class="slds-truncate">{{{get record 'vision__c'}}}</p>
+        <p>{{{get record 'vision__c'}}}</p>
           </div>
       </div>  
       <div class="slds-tile">
         <p class="slds-tile__title slds-truncate"><a href="#">Constrains</a></p>
           <div class="slds-tile__detail slds-text-body--small">
-        <p class="slds-truncate">{{{get record 'constrains__c'}}}</p>
+        <p>{{{get record 'constrains__c'}}}</p>
           </div>
       </div>
     </section>
@@ -192,17 +192,17 @@
         <table class="slds-table slds-table--bordered slds-max-medium-table--stacked-horizontal">
           <thead>
             <tr class="slds-no-hover">
-              <th class="slds-text-heading--label slds-size--1-of-2" scope="col">Name</th>
-              <th class="slds-text-heading--label slds-size--1-of-2" scope="col">Story Points</th>
-              <th class="slds-text-heading--label slds-size--1-of-2" scope="col">Progress</th>              
+              <th class="slds-text-heading--label slds-size--1-of-3" scope="col">Name</th>
+              <th class="slds-text-heading--label slds-size--1-of-3" scope="col">Story Points</th>
+              <th class="slds-text-heading--label slds-size--1-of-3" scope="col">Progress</th>              
             </tr>
           </thead>
           <tbody>
             {{#each topics}}
             <tr class="slds-hint-parent">
-              <td class="slds-size--1-of-2" data-label="Name"><a href="/topic/{{get this 'Id'}}">{{get this 'Name'}}</a></td>
-              <td class="slds-size--1-of-2" data-label="Title">{{get this 'Story_Points__c'}}</td>
-              <td class="slds-size--1-of-2" data-label="Title">{{formatdecimal this 'progress__c'}}</td>
+              <td class="slds-size--1-of-3" data-label="Name"><a href="/topic/{{get this 'Id'}}">{{get this 'Name'}}</a></td>
+              <td class="slds-size--1-of-3" data-label="Story Points">{{get this 'Story_Points__c'}}</td>
+              <td class="slds-size--1-of-3" data-label="Progress">{{formatdecimal this 'progress__c'}}</td>
               <td>            
             </tr>
             {{/each}}
@@ -253,17 +253,17 @@
         <table class="slds-table slds-table--bordered slds-max-medium-table--stacked-horizontal">
           <thead>
             <tr class="slds-no-hover">
-              <th class="slds-text-heading--label slds-size--1-of-2" scope="col">Date</th>
-              <th class="slds-text-heading--label slds-size--1-of-2" scope="col">Itens Created</th>
-              <th class="slds-text-heading--label slds-size--1-of-2" scope="col">Story Points Delivered</th>              
+              <th class="slds-text-heading--label slds-size--1-of-3" scope="col">Date</th>
+              <th class="slds-text-heading--label slds-size--1-of-3" scope="col">Itens Created</th>
+              <th class="slds-text-heading--label slds-size--1-of-3" scope="col">Story Points Delivered</th>              
             </tr>
           </thead>
           <tbody>
             {{#each months}}
             <tr class="slds-hint-parent">
-              <td class="slds-size--1-of-2" data-label="Name">{{data}}</td>
-              <td class="slds-size--1-of-2" data-label="Title">{{numCriados}}</td>
-              <td class="slds-size--1-of-2" data-label="Title">{{numPontosMelhoria}}</td>
+              <td class="slds-size--1-of-3" data-label="Name">{{data}}</td>
+              <td class="slds-size--1-of-3" data-label="Title">{{numCriados}}</td>
+              <td class="slds-size--1-of-3" data-label="Title">{{numPontosMelhoria}}</td>
               <td>            
             </tr>
             {{/each}}

@@ -56,7 +56,7 @@ router.get('/', function(req, res, next) {
 /****************************************************PROJECT START**********************************************/
 /* list page. */
 router.get('/project/', requireLogin, function(req, res, next) {  
-  org.query({ query: "Select Id,Name,Type__c,Vision__c,Constrains__c,Estimated_Price__c,Actual_Price__c,Real_Price__c, Estimated_Story_Points__c,Price_per_SP__c, Safety_Buffer__c,Story_Points__c,Story_Points_Done__c, Status__c, Progress__c From Project__c Where Account__r.atoken__c = '" +atoken+ "' Order By LastModifiedDate DESC" })
+  org.query({ query: "Select Id,Name,Type__c, Status_formula__c, Vision__c,Constrains__c,Estimated_Price__c,Actual_Price__c,Real_Price__c, Estimated_Story_Points__c,Price_per_SP__c, Safety_Buffer__c,Story_Points__c,Story_Points_Done__c, Progress__c From Project__c Where Account__r.atoken__c = '" +atoken+ "' Order By LastModifiedDate DESC" })
     .then(function(results){
       res.render('projectlist', { records: results.records });
     }).catch( function(e) {
@@ -70,7 +70,7 @@ router.get('/project/', requireLogin, function(req, res, next) {
 router.get('/project/:id', requireLogin, function(req, res, next) {  
   // query for record, contacts and opportunities
   Promise.join(
-    org.query({ query: "Select Id,Name,Type__c,isProject__c, Active__c,Start_Date_Formatted__c,End_Date_Formatted__c,Start_Date__c,End_Date__c,Vision__c,Constrains__c,Estimated_Price__c,Actual_Price__c,Real_Price__c, Estimated_Story_Points__c,Price_per_SP__c, Safety_Buffer__c,Story_Points__c,Story_Points_Done__c, Status__c, Progress__c From Project__c Where id = '"+req.params.id+"' and Account__r.atoken__c = '" +atoken+ "' LIMIT 1" }),
+    org.query({ query: "Select Id,Name,Type__c,isProject__c ,Start_Date_Formatted__c,End_Date_Formatted__c,Start_Date__c,End_Date__c,Vision__c,Constrains__c,Estimated_Price__c,Actual_Price__c,Real_Price__c, Estimated_Story_Points__c,Price_per_SP__c, Safety_Buffer__c,Story_Points__c,Story_Points_Done__c, Status_formula__c, Progress__c From Project__c Where id = '"+req.params.id+"' and Account__r.atoken__c = '" +atoken+ "' LIMIT 1" }),
     org.query({ query: "Select Id, Name, Progress__c, Story_Points__c From Topic__c where Project__c = '" + req.params.id + "' and Project__r.Account__r.atoken__c = '" +atoken+ "'"}),
     org.apexRest({uri:'Project', urlParams: {id: req.params.id , atoken: atoken} }),
     function(project, topics, months) {
@@ -140,7 +140,7 @@ router.get('/epic/:id', requireLogin, function(req, res, next) {
   // query for record, contacts and opportunities
   Promise.join(
     org.query({ query: "Select Id, Name, Topic__c, Progress__c,Description__c, Assumptions__c, Story_Points__c,Story_Points_Done__c From Epic__c Where id = '" +req.params.id+ "' and Topic__r.Project__r.Account__r.atoken__c = '" +atoken+ "' LIMIT 1" }),
-    org.query({ query: "Select Id, Name, Story_Points__c, Status__c From Item__c where Epic__c = '" + req.params.id + "' and Epic__r.Topic__r.Project__r.Account__r.atoken__c = '" +atoken+ "'"}),
+    org.query({ query: "Select Id, Name, Subject__c, Story_Points__c, Status__c From Item__c where Epic__c = '" + req.params.id + "' and Epic__r.Topic__r.Project__r.Account__r.atoken__c = '" +atoken+ "'"}),
     function(epic, itens) {
         res.render('epicdetail', { record: epic.records[0], itens: itens.records });
     }).catch( function(e) {
@@ -202,7 +202,7 @@ router.post('/item/new', requireSupport, requireLogin, function(req, res, next) 
 router.get('/item/:id', requireLogin, function(req, res, next) {
   // query for record, contacts and opportunities
   Promise.join(
-    org.query({ query: "Select Id, Name, Sprint__c, Subject__c, Description__c, Assumptions__c, Priority__c, Story_Points__c, Status__c, Sprint_Name__c, Epic_Name__c, Project_Name__c, Good_Cases__c, Bad_Cases__c From Item__c Where id = '" +req.params.id+ "' and Epic__r.Topic__r.Project__r.Account__r.atoken__c = '" +atoken+ "' LIMIT 1" }),
+    org.query({ query: "Select Id, Name,isSupport__c, Sprint__c, Subject__c, Description__c, Assumptions__c, Priority__c, Story_Points__c, Status__c, Sprint_Name__c, Epic_Name__c, Project_Name__c, Good_Cases__c, Bad_Cases__c From Item__c Where id = '" +req.params.id+ "' and Epic__r.Topic__r.Project__r.Account__r.atoken__c = '" +atoken+ "' LIMIT 1" }),
     org.query({ query: "Select Id, Name, Body__c, Item__c, Created_by__c, CreatedDate_Formatted__c From Comment__c where Item__c = '" + req.params.id + "' and Item__r.Epic__r.Topic__r.Project__r.Account__r.atoken__c = '" +atoken+ "' Order by CreatedDate desc"}),
     function(item, comments ) {
         res.render('itemdetail', { record: item.records[0], comments: comments.records });

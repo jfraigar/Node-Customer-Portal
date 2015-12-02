@@ -57,16 +57,7 @@
   <div class="slds-grid slds-page-header__detail-row">
 
     <!-- PAGE HEADER / ROW 2 / COLUMN 1 -->
-    <div class="slds-col--padded slds-size--1-of-4">
-      <dl>
-        <dt>
-          <p class="slds-text-heading--label slds-truncate">Progress</p>
-        </dt>
-        <dd>
-          <p class="slds-text-body--regular slds-truncate">{{get record 'Progress__c'}}</p>
-        </dd>
-      </dl>
-    </div>
+
 
     <!-- PAGE HEADER / ROW 2 / COLUMN 2 -->
     <div class="slds-col--padded slds-size--1-of-4">
@@ -89,14 +80,7 @@
     </div>
 
     <!-- PAGE HEADER / ROW 2 / COLUMN 4 -->
-    <div class="slds-col--padded slds-size--1-of-4">
-      <dl>
-        <dt>
-          <p class="slds-text-heading--label slds-truncate">Story Points</p>
-        </dt>
-        <dd>{{get record 'Story_Points__c'}}</dd>
-      </dl>
-    </div>
+
 
   </div>
   <!-- / PAGE HEADER DETAIL ROW -->
@@ -135,13 +119,13 @@
       <div class="slds-tile">
         <p class="slds-tile__title slds-truncate"><a href="#">Description</a></p>
           <div class="slds-tile__detail slds-text-body--small">
-        <p class="slds-truncate">{{{get record 'description__c'}}}</p>
+        <p>{{{get record 'description__c'}}}</p>
           </div>
       </div>  
       <div class="slds-tile">
         <p class="slds-tile__title slds-truncate"><a href="#">Assumptions</a></p>
           <div class="slds-tile__detail slds-text-body--small">
-        <p class="slds-truncate">{{{get record 'assumptions__c'}}}</p>
+        <p>{{{get record 'assumptions__c'}}}</p>
           </div>
       </div>
     </section>
@@ -178,17 +162,17 @@
         <table class="slds-table slds-table--bordered slds-max-medium-table--stacked-horizontal">
           <thead>
             <tr class="slds-no-hover">
-              <th class="slds-text-heading--label slds-size--1-of-2" scope="col">Name</th>
-              <th class="slds-text-heading--label slds-size--1-of-2" scope="col">Story Points</th>
-              <th class="slds-text-heading--label slds-size--1-of-2" scope="col">Progress</th>              
+              <th class="slds-text-heading--label slds-size--1-of-3" scope="col">Name</th>
+              <th class="slds-text-heading--label slds-size--1-of-3" scope="col">Story Points</th>
+              <th class="slds-text-heading--label slds-size--1-of-3" scope="col">Progress</th>              
             </tr>
           </thead>
           <tbody>
             {{#each epics}}
             <tr class="slds-hint-parent">
-              <td class="slds-size--1-of-2" data-label="Name"><a href="/epic/{{get this 'Id'}}">{{get this 'Name'}}</a></td>
-              <td class="slds-size--1-of-2" data-label="Title">{{get this 'Story_Points__c'}}</td>
-              <td class="slds-size--1-of-2" data-label="Title">{{formatdecimal this 'progress__c'}}</td>
+              <td class="slds-size--1-of-3" data-label="Name"><a href="/epic/{{get this 'Id'}}">{{get this 'Name'}}</a></td>
+              <td class="slds-size--1-of-3" data-label="Story Points">{{get this 'Story_Points__c'}}</td>
+              <td class="slds-size--1-of-3" data-label="Progress  ">{{formatdecimal this 'progress__c'}}</td>
               <td>            
             </tr>
             {{/each}}

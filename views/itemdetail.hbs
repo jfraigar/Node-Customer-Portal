@@ -128,13 +128,13 @@
       <div class="slds-tile">
         <p class="slds-tile__title slds-truncate"><a href="#">Description</a></p>
           <div class="slds-tile__detail slds-text-body--small">
-        <p class="slds-truncate">{{{get record 'Description__c'}}}</p>
+        <p>{{{get record 'Description__c'}}}</p>
           </div>
       </div>  
       <div class="slds-tile">
         <p class="slds-tile__title slds-truncate"><a href="#">Assumptions</a></p>
           <div class="slds-tile__detail slds-text-body--small">
-        <p class="slds-truncate">{{{get record 'Assumptions__c'}}}</p>
+        <p>{{{get record 'Assumptions__c'}}}</p>
           </div>
       </div>
     </section>
@@ -160,7 +160,7 @@
           </svg>
         </div>
         <div class="slds-media__body">
-          <h3 class="slds-text-heading--small">Cases</h3>
+          <h3 class="slds-text-heading--small">Acceptance Criteria</h3>
         </div>
       </div>
     </header>
@@ -169,15 +169,15 @@
     <!-- CARD BODY = TABLE -->
     <section class="slds-card__body">
       <div class="slds-tile">
-        <p class="slds-tile__title slds-truncate"><a href="#">Good</a></p>
+        <p class="slds-tile__title slds-truncate"><a href="#">Good Cases</a></p>
           <div class="slds-tile__detail slds-text-body--small">
-        <p class="slds-truncate">{{{get record 'Good_Cases__c'}}}</p>
+        <p>{{{get record 'Good_Cases__c'}}}</p>
           </div>
       </div>  
       <div class="slds-tile">
-        <p class="slds-tile__title slds-truncate"><a href="#">Bad</a></p>
+        <p class="slds-tile__title slds-truncate"><a href="#">Bad Cases</a></p>
           <div class="slds-tile__detail slds-text-body--small">
-        <p class="slds-truncate">{{{get record 'bad_Cases__c'}}}</p>
+        <p>{{{get record 'bad_Cases__c'}}}</p>
           </div>
       </div>
     </section>
@@ -197,6 +197,7 @@
 <!-- / PRIMARY CONTENT WRAPPER -->
 
 <!-- / COMMENTS WRAPPER -->
+{{#if (get record 'isSupport__c')}}
 <div class="myapp">
   <!-- RELATED LIST CARDS-->
 <div class="slds-grid slds-m-top--large">
@@ -257,3 +258,4 @@
 </div>
   <!-- / RELATED LIST CARDS -->
 </div>
+{{/if}}
