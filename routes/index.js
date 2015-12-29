@@ -4,10 +4,16 @@ var raygun = require('raygun');
 var raygunClient = new raygun.Client().init({ apiKey: '8iA/gZwcXIIvak6Q1/4e4w==' });
 
 var express = require('express');
+var multer  = require('multer');
+var upload = multer({
+  limits: {fileSize: 5000000, files:1},
+})
 
 var router = express.Router();
 
 var Promise = require("bluebird");
+
+var fs = require("fs");
 
 var nforce = require('nforce');
 
@@ -203,9 +209,10 @@ router.get('/item/:id', requireLogin, function(req, res, next) {
   // query for record, contacts and opportunities
   Promise.join(
     org.query({ query: "Select Id, Name,isSupport__c, Sprint__c, Subject__c, Description__c, Assumptions__c, Priority__c, Story_Points__c, Status__c, Sprint_Name__c, Epic_Name__c, Project_Name__c, Good_Cases__c, Bad_Cases__c From Item__c Where id = '" +req.params.id+ "' and Epic__r.Topic__r.Project__r.Account__r.atoken__c = '" +atoken+ "' LIMIT 1" }),
-    org.query({ query: "Select Id, Name, Body__c, Item__c, Created_by__c, CreatedDate_Formatted__c From Comment__c where Item__c = '" + req.params.id + "' and Item__r.Epic__r.Topic__r.Project__r.Account__r.atoken__c = '" +atoken+ "' Order by CreatedDate desc"}),
-    function(item, comments ) {
-        res.render('itemdetail', { record: item.records[0], comments: comments.records });
+    org.query({ query: "Select Id, Name, Body__c, Item__c, Created_by__c, CreatedDate_Formatted__c From Comment__c where Item__c = '" + req.params.id + "' and Item__r.Epic__r.Topic__r.Project__r.Account__r.atoken__c = '" +atoken+ "' and Private__c = false Order by CreatedDate desc"}),
+    org.query({ query: "Select Id, Name, Description From Attachment where ParentId = '" + req.params.id + "' Order by CreatedDate desc"}),
+    function(item, comments, attachments ) {
+        res.render('itemdetail', { record: item.records[0], comments: comments.records, attachments: attachments.records });
   }).catch( function(e) {
     console.log(e);
     raygunClient.send(e);
@@ -227,8 +234,8 @@ router.get('/comment/new', requireSupport, requireLogin, function(req, res, next
 
 /* Creates a new the record */
 router.post('/comment/new', requireSupport, requireLogin, function(req, res, next) {
-  console.log('req.body.itemid--> ' + itid);
-  var itid = req.body.itemid;  
+  console.log('req.body.itemid--> ' + req.body.itemid);
+  var itid = req.body.itemid;    
   var comment = nforce.createSObject('Comment__c');
   comment.set('Body__c', req.body.commentbody);
   comment.set('Item__c', itid);
@@ -247,6 +254,109 @@ router.post('/comment/new', requireSupport, requireLogin, function(req, res, nex
 });
 
 /****************************************************COMMENT END**********************************************/
+
+/****************************************************ATTACHMENT START**********************************************/
+/* Display new form */
+router.get('/attachment/new', requireLogin, function(req, res, next) {
+  console.log('req.query.itemid--> ' + req.query.itemid);  
+  res.render('attachmentnew' , { itemid: req.query.itemid });
+});
+
+/* Creates a new the record */
+router.post('/attachment/new', requireLogin, upload.single('anexo'), function(req, res, next) {
+  var description = req.body.description;
+  var originalname = req.file.originalname;
+  var itid = req.body.itemid;
+  console.log('description--> ' + description);
+  console.log('originalname--> ' + originalname);
+  console.log('itid--> ' + itid);
+  //res.json(req.file.buffer);   
+
+  var att = nforce.createSObject('Attachment', {
+    Name: originalname,
+    Description: description,
+    ParentId: itid,
+    attachment: {
+      fileName: originalname,      
+      body: req.file.buffer
+      }
+    });
+
+  org.insert({ sobject: att })
+    .then(function(attachment){
+      res.redirect('/item/' + itid);
+    }).catch( function(e) {
+      console.log(e);
+      raygunClient.send(e);
+      next(e);
+    }); 
+ 
+});
+
+router.get('/attachment/download', requireLogin, function(req, res, next){
+  var attId = req.query.attid;
+  var attname = req.query.attname;
+  console.log('attId--> ' + attId); 
+  console.log('attname--> ' + attname); 
+
+  org.getAttachmentBody({ id: attId }, function(err, resp) {
+      if(err) {
+        console.log('temos um errooo!');
+        console.error(err);
+        throw(err);
+      } else {
+        //res.json(resp);
+        res.setHeader('Content-disposition', 'attachment; filename='+attname);
+        //res.download(resp);        
+        //res.fileSend(resp);
+        res.write(resp, 'binary');
+        res.end();
+      }
+    }); 
+});
+
+/****************************************************ATTACHMENT END**********************************************/
+
+/****************************************************FILEUPLOAD START**********************************************/
+/* Display new form */
+router.get('/fileupload/new', function(req, res, next) {
+    
+  res.render('fileupload');
+});
+
+/* Creates a new the record */
+router.post('/fileupload/new',upload.single('anexo'), function(req, res, next) {
+  var description = req.body.description;
+  var originalname = req.file.originalname;
+  console.log('description--> ' + description);
+  console.log('originalname--> ' + originalname);
+  //res.json(req.file.buffer);
+    
+  var itid = 'a0K1a000003hGBdEAM';  
+
+  var att = nforce.createSObject('Attachment', {
+    Name: originalname,
+    Description: description,
+    ParentId: itid,
+    attachment: {
+      fileName: originalname,      
+      body: req.file.buffer
+      }
+    });
+
+  org.insert({ sobject: att })
+    .then(function(attachment){
+      res.redirect('/item/' + itid);
+    }).catch( function(e) {
+      console.log(e);
+      raygunClient.send(e);
+      next(e);
+    });
+ 
+ 
+});
+
+/****************************************************FILEUPLOAD END**********************************************/
 
 /****************************************************SPRINT START**********************************************/
 /* list page. */

@@ -6,6 +6,7 @@ var logger = require('morgan');
 var expressSession = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var express = require('express');
 
 console.log('app.js--> var raygun = require(raygun);');
 var raygun = require('raygun');
@@ -34,6 +35,8 @@ console.log('app.js-->process.env.NODE_ENV-->' + process.env.NODE_ENV);
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
+
+//app.use(bodyParser( { keepExtensions: true, uploadDir:'/uploads' } )); //to be albe to upload files using req.files
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
