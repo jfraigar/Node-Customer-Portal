@@ -77,11 +77,13 @@ td2
           <th scope="col">Epic</th>
           <th scope="col">Priority</th>          
           <th scope="col">Story Points</th>  
-          <th scope="col">Status</th>                  
+          <th scope="col">Status</th>       
+          <th scope="col">Stage</th>            
         </tr>
       </thead>
       <tfoot>
         <tr>
+          <th></th>
           <th></th>
           <th></th>
           <th></th>
@@ -104,7 +106,8 @@ td2
           </td>    
           <td class="slds-shrink">{{get this 'Priority__c'}}</td>       
           <td class="slds-shrink">{{get this 'Story_Points__c'}}</td>
-          <td class="slds-shrink">{{get this 'Status__c'}}</td>         
+          <td class="slds-shrink">{{get this 'Status__c'}}</td>   
+          <td class="slds-shrink">{{get this 'Stage__c'}}</td>       
         </tr>
         {{/each}}
       </tbody>
@@ -120,8 +123,8 @@ $(document).ready(function() {
             this.api().columns().every( function () {
                 var column = this;        
                 var title = column.header(); 
-                //alert( 'Column title clicked on: '+$(title).html() );
-                if($(title).html() == 'Project' || $(title).html() == 'Epic' || $(title).html() == 'Status'){
+                //alert( 'Column title: '+$(title).html() );
+                if($(title).html() == 'Epic' || $(title).html() == 'Status' || $(title).html() == 'Stage'){
                     var select = $('<select><option value=""></option></select>')
                       .appendTo( $(column.footer()).empty() )
                       .on( 'change', function () {

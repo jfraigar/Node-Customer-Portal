@@ -161,7 +161,7 @@ router.get('/epic/:id', requireLogin, function(req, res, next) {
 /****************************************************ITEM START**********************************************/
 /* list page. */
 router.get('/item/', requireLogin, function(req, res, next) {
-  org.query({ query: "Select Id, Name, isProject__c, Project_Id__c, Subject__c, Priority__c, Sprint__c, Story_Points__c, Status__c, Sprint_Name__c, Epic_Name__c, Project_Name__c From Item__c Where Epic__r.Topic__r.Project__r.Account__r.atoken__c = '" +atoken+ "' Order By LastModifiedDate DESC" })
+  org.query({ query: "Select Id, Stage__c, Name, isProject__c, Project_Id__c, Subject__c, Priority__c, Sprint__c, Story_Points__c, Status__c, Sprint_Name__c, Epic_Name__c, Project_Name__c From Item__c Where Epic__r.Topic__r.Project__r.Account__r.atoken__c = '" +atoken+ "' Order By LastModifiedDate DESC" })
     .then(function(results){
       var button1, button2;
       if(req.session.support == true){
