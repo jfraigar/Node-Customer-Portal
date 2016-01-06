@@ -1,3 +1,38 @@
+<style>
+tfoot {
+    display: table-header-group;
+}
+table22
+{
+    width: 100px;
+    text-wrap;
+    overflow:hidden;  
+    table-layout: fixed;   
+}
+.miclasse3
+{ 
+    max-width: 10px;
+}
+.miclasse2
+{
+    word-wrap: break-word;
+    width: 10px;
+    text-wrap:unrestricted;
+    overflow:hidden; 
+    word-wrap: break-word;
+    width: 10px;
+    text-wrap:unrestricted;
+    overflow:hidden;
+    text-wrap;
+    overflow:hidden;
+    table-layout:fixed;
+}
+.miclasse
+{
+    white-space: normal;    
+}
+
+</style>
 <nav class="slds-p-bottom--medium" role="navigation">
   <p id="bread-crumb-label" class="slds-assistive-text">You are here:</p>
   <ol class="slds-breadcrumb slds-list--horizontal" aria-labelledby="bread-crumb-label">
@@ -238,7 +273,7 @@
                 {{#each comments}}
                 <tr class="slds-hint-parent">
                   <td class="slds-size--1-of-6" data-label="Created by">{{get this 'Created_by__c'}}</td>                                    
-                  <td class="slds-size--4-of-6" data-label="Comment">{{{get this 'Body__c'}}}</td>
+                  <td style="white-space: normal" class="slds-size--4-of-6" data-label="Comment">{{{get this 'Body__c'}}}</td>
                   <td class="slds-size--1-of-6" data-label="Date">{{get this 'CreatedDate_Formatted__c'}}</td>                    
                 </tr>
                 {{/each}}
