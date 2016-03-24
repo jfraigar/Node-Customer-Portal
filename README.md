@@ -1,4 +1,8 @@
 # node-nforce-demo
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
+NOTE:What follows was created by
+Jeff Douglas -> [jeffdonthemic](https://github.com/jeffdonthemic)
 
 This is a sample account CRUD application using the [Lightning Design System](https://www.lightningdesignsystem.com) enabling you to easily build applications with the look and feel that is consistent with Salesforce Experience core features.
 
